@@ -93,5 +93,22 @@ title('Noise Filtered Signal')
 fag=conv(hlpf,hn)
 fags=filter(fag,1,y)
 
+[Hn2, WHn2] = freqz(fag,1);
+
+figure(5)
+subplot(2,1,1);
+plot(WHn2/pi, 20*log10(abs(Hn2)))
+xlabel('Frequency (\omega/\pi)')
+ylabel('|Hn(e^{j\omega})|')
+title('Notch Filter in dB')
 
 
+Nr2 = 2^ceil(log2(length(fags)));
+R2 = fftshift(fft(fags,Nr2));
+omegaR2 = (0:(Nr2-1))*(2*pi/Nr2)-pi;
+
+subplot(2,1,2);
+plot(omegaR2/pi,abs(R2));
+xlabel('Frequency (\omega/\pi)')
+ylabel('|R(e^{j\omega})|')
+title('Tone Filtered Signal')
