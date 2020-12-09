@@ -56,7 +56,7 @@ R = fftshift(fft(r,Nr));
 omegaR = (0:(Nr-1))*(2*pi/Nr)-pi;
 
 subplot(2,1,2);
-plot(omegaR/pi,abs(Fo));
+plot(omegaR/pi,abs(R));
 xlabel('Frequency (\omega/\pi)')
 ylabel('|R(e^{j\omega})|')
 title('Tone Filtered Signal')
@@ -90,10 +90,8 @@ xlabel('Frequency (\omega/\pi)')
 ylabel('|S(e^{j\omega})|')
 title('Noise Filtered Signal')
 
-
-
-
-
+fag=conv(hlpf,hn)
+fags=filter(fag,1,y)
 
 
 
