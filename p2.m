@@ -112,3 +112,28 @@ plot(omegaR2/pi,abs(R2 ));
 xlabel('Frequency (\omega/\pi)')
 ylabel('|R(e^{j\omega})|')
 title('Tone And Notch Filtered Signal')
+
+%% (g)
+hcombo = conv(hlpf, hn); % Combo filter
+hcnfft = 2^ceil(log2(length(s)));
+Hcombo = fftshift(fft(hcombo,hcnfft));
+omegaHcombo = (0:(hcnfft-1))*(2*pi/hcnfft)-pi;
+
+figure(6)
+subplot(2,1,1)
+plot(omegaHcombo/pi, 20*log10(abs(Hcombo)))
+xlabel('Frequency (\omega/\pi)')
+ylabel('|Hcombo(e^{j\omega})|')
+title('Combo Filter Frequency Response')
+
+% Noise Filtering
+s2 = filter(hcombo, 1, y);
+Ns2 = 2^ceil(log2(length(s2)));
+S2 = fftshift(fft(s2,Ns2));
+omegaS2 = (0:(Ns2-1))*(2*pi/Ns2)-pi;
+
+subplot(2,1,2)
+plot(omegaS2/pi,abs(S2));
+xlabel('Frequency (\omega/\pi)')
+ylabel('|S2(e^{j\omega})|')
+title('Combo Filtered Signal')
